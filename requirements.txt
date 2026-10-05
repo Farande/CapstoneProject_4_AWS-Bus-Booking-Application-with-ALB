@@ -1,0 +1,8 @@
+Flask
+PyMySQL
+python-dotenv
+reportlab
+qrcode
+Pillow
+requests
+google-generativeai
