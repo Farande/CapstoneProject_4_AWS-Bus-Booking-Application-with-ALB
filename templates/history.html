@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking History | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">trip history</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/buses">Routes</a>
+            <a href="/assistant">AI Assistant</a>
+            <a href="/status">Status</a>
+            <a href="/analytics">Analytics</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell">
+    <div class="page-hero">
+        <div>
+            <p class="eyebrow">Travel records</p>
+            <h1>My Booking History</h1>
+        </div>
+        <a href="{{ url_for('buses.buses') }}" class="ghost-btn">Book New Trip</a>
+    </div>
+
+    {% if bookings %}
+    <div class="history-list">
+        {% for booking in bookings %}
+        <article class="history-card">
+            <div>
+                <p class="eyebrow">{{ booking.get('status', 'CONFIRMED') }}</p>
+                <h2>{{ booking.get('bus_name', 'Bus Journey') }}</h2>
+                <p><strong>Route:</strong> {{ booking.get('source', 'Mumbai') }} → {{ booking.get('destination', 'Pune') }}</p>
+                <p><strong>Date:</strong> {{ booking.get('booking_date', 'Today') }}</p>
+                <p><strong>Seat:</strong> {{ booking.get('seat_number', 'N/A') }}</p>
+            </div>
+            <div class="history-actions">
+                <span class="status-badge {{ 'confirmed' if booking.get('status', 'CONFIRMED')|lower == 'confirmed' else 'pending' }}">{{ booking.get('status', 'Confirmed') }}</span>
+                <a class="ghost-btn" href="{{ url_for('ticket.ticket', booking_id=booking.get('booking_id', 1)) }}">View ticket</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">You have not booked any trips yet. Start exploring routes now.</div>
+    {% endif %}
+</section>
+
+</body>
+</html>

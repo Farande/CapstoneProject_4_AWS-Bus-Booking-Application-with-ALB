@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Booking | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">book your seat</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/buses">Routes</a>
+            <a href="/history">My Trips</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell booking-layout">
+    <div class="booking-panel">
+        <div class="route-summary">
+            <p class="eyebrow">Seat reservation</p>
+            <h1>{{ bus.get('bus_name', 'Express Travels') }}</h1>
+            <div class="trip-route">{{ bus.get('source', 'Mumbai') }} → {{ bus.get('destination', 'Pune') }}</div>
+
+            <ul class="trip-details">
+                <li><span>Departure</span><strong>{{ bus.get('departure_time', '08:00 AM') }}</strong></li>
+                <li><span>Arrival</span><strong>{{ bus.get('arrival_time', '12:00 PM') }}</strong></li>
+                <li><span>Fare</span><strong>₹{{ bus.get('fare', 500) }}</strong></li>
+                <li><span>Availability</span><strong>{{ bus.get('available_seats', 0) }} seats</strong></li>
+            </ul>
+        </div>
+
+        <form class="seat-form" method="post" action="{{ url_for('booking.book', bus_id=bus['bus_id']) }}">
+            <div class="seat-header">
+                <h2>Select your seat</h2>
+                <div class="seat-legend">
+                    <span><span class="legend-dot available"></span> Available</span>
+                    <span><span class="legend-dot occupied"></span> Occupied</span>
+                    <span><span class="legend-dot selected"></span> Selected</span>
+                </div>
+            </div>
+
+            <div class="bus-layout" aria-label="Seat map">
+                <div class="bus-driver">Driver</div>
+                {% for row in range(1, 6) %}
+                <div class="seat-row">
+                    {% for col in range(1, 5) %}
+                        {% set seat = (row - 1) * 4 + col %}
+                        {% set occupied = seat in [2, 5, 8, 11, 13, 18, 21, 24, 29, 33, 36, 39] %}
+                        <button type="button" class="bus-seat {% if occupied %}occupied{% endif %}" data-seat="{{ seat }}" {% if occupied %}disabled{% endif %}>
+                            <span>{{ seat }}</span>
+                        </button>
+                    {% endfor %}
+                    <span class="bus-aisle"></span>
+                    {% for col in range(1, 5) %}
+                        {% set seat = (row - 1) * 4 + 4 + col %}
+                        {% set occupied = seat in [2, 5, 8, 11, 13, 18, 21, 24, 29, 33, 36, 39] %}
+                        <button type="button" class="bus-seat {% if occupied %}occupied{% endif %}" data-seat="{{ seat }}" {% if occupied %}disabled{% endif %}>
+                            <span>{{ seat }}</span>
+                        </button>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <input type="hidden" name="seat_number" id="seat_number" required>
+            <button type="submit" class="confirm-btn">Confirm Booking</button>
+        </form>
+    </div>
+</section>
+
+<script>
+    const seatButtons = document.querySelectorAll('.bus-seat:not(.occupied)');
+    const seatInput = document.getElementById('seat_number');
+
+    seatButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            seatButtons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            seatInput.value = button.dataset.seat;
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Register | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">support desk</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/buses">Routes</a>
+            <a href="/assistant">AI</a>
+            <a href="/status">Status</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell">
+    <div class="page-hero">
+        <div>
+            <p class="eyebrow">Passenger support</p>
+            <h1>AI Complaint Register</h1>
+        </div>
+        <span class="status-pill">Support active</span>
+    </div>
+
+    <div class="two-column">
+        <div class="form-card compact-form">
+            <h2>Submit complaint</h2>
+            <form method="post" action="{{ url_for('complaints.complaints') }}">
+                <div class="form-group">
+                    <label for="title">Issue title</label>
+                    <input id="title" name="title" type="text" placeholder="Example: Delay complaint" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category">
+                        <option>Service</option>
+                        <option>Operational</option>
+                        <option>Safety</option>
+                        <option>Refund</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Complaint details</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Describe the issue in detail..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Register complaint</button>
+            </form>
+        </div>
+
+        <div class="panel-card">
+            <h2>Recent complaints</h2>
+            <div class="stack-list">
+                {% for complaint in complaints %}
+                <div class="smart-item complaint-card">
+                    <div class="complaint-meta">
+                        <span class="chip light">{{ complaint.category }}</span>
+                        <span class="status-badge pending">{{ complaint.status }}</span>
+                    </div>
+                    <strong>{{ complaint.title }}</strong>
+                    <p>{{ complaint.message }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

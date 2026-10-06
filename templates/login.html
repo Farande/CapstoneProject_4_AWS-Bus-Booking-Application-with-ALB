@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">smart access</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/register">Register</a>
+        </nav>
+    </div>
+</header>
+
+<div class="form-shell">
+    <form class="form-card" method="post" action="{{ url_for('auth.login') }}">
+        <h2>Welcome back</h2>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Enter your password" required>
+        </div>
+
+        <button type="submit" class="submit-btn">Login</button>
+
+        <p>Don't have an account? <a href="/register">Register</a></p>
+    </form>
+</div>
+
+</body>
+</html>

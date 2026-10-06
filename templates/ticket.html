@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Ticket | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">e-ticket</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/history">My Trips</a>
+            <a href="/buses">Routes</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell ticket-shell">
+    <div class="ticket-card">
+        <div class="ticket-top">
+            <div>
+                <p class="eyebrow">Boarding pass</p>
+                <h1>{{ booking.bus_name }}</h1>
+            </div>
+            <span class="status-badge confirmed">Confirmed</span>
+        </div>
+
+        <div class="ticket-body">
+            <div class="ticket-info">
+                <div class="grid-two">
+                    <div>
+                        <span>Booking ID</span>
+                        <strong>#{{ booking.booking_id }}</strong>
+                    </div>
+                    <div>
+                        <span>Seat</span>
+                        <strong>{{ booking.seat_number }}</strong>
+                    </div>
+                    <div>
+                        <span>Route</span>
+                        <strong>{{ booking.source }} → {{ booking.destination }}</strong>
+                    </div>
+                    <div>
+                        <span>Date</span>
+                        <strong>{{ booking.booking_date }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qr-box" aria-label="QR code placeholder">
+                <div class="qr-pattern">
+                    <span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ticket-footer">
+            <p>Ticket valid for one boarding only</p>
+            {% if ticket_url %}
+            <a href="{{ ticket_url }}" target="_blank" class="ghost-btn">Open stored ticket</a>
+            {% endif %}
+            <a href="/history" class="primary-btn">Back to history</a>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

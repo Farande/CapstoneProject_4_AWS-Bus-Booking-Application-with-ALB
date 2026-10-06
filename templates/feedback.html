@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback & Rating | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">reviews</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/buses">Routes</a>
+            <a href="/notifications">Alerts</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell">
+    <div class="page-hero">
+        <div>
+            <p class="eyebrow">Customer experience</p>
+            <h1>Feedback & Rating</h1>
+        </div>
+        <span class="status-pill">Community voice</span>
+    </div>
+
+    <div class="two-column">
+        <div class="form-card compact-form">
+            <h2>Rate your ride</h2>
+            <form method="post" action="{{ url_for('feedback.feedback') }}">
+                <div class="form-group">
+                    <label for="name">Passenger name</label>
+                    <input id="name" name="name" type="text" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <select id="rating" name="rating">
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Good</option>
+                        <option value="3">3 - Average</option>
+                        <option value="2">2 - Poor</option>
+                        <option value="1">1 - Very Poor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <textarea id="comment" name="comment" rows="5" placeholder="Share your experience..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send feedback</button>
+            </form>
+        </div>
+
+        <div class="panel-card">
+            <h2>Recent reviews</h2>
+            <div class="stack-list">
+                {% for review in feedbacks %}
+                <div class="smart-item">
+                    <div class="rating-row">
+                        <strong>{{ review.name }}</strong>
+                        <span>{{ '★' * review.rating }}{{ '☆' * (5 - review.rating) }}</span>
+                    </div>
+                    <p>{{ review.comment }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

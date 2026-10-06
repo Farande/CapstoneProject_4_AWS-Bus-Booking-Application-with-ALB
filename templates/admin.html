@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">admin control</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/logout" class="highlight">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell">
+    <div class="page-hero">
+        <div>
+            <p class="eyebrow">Operations center</p>
+            <h1>Admin Dashboard</h1>
+        </div>
+        <span class="status-pill">System healthy</span>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span>Total buses</span>
+            <strong>{{ analytics.total_buses }}</strong>
+        </div>
+        <div class="metric-card">
+            <span>Bookings</span>
+            <strong>{{ analytics.total_bookings }}</strong>
+        </div>
+        <div class="metric-card">
+            <span>Seats available</span>
+            <strong>{{ analytics.available_seats }}</strong>
+        </div>
+        <div class="metric-card">
+            <span>Revenue</span>
+            <strong>₹{{ analytics.revenue }}</strong>
+        </div>
+    </div>
+
+    <div class="panel-grid">
+        <div class="panel-card">
+            <h2>Fleet inventory</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bus</th>
+                            <th>Route</th>
+                            <th>Seats</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for bus in buses %}
+                        <tr>
+                            <td>{{ bus.get('bus_name', 'N/A') }}</td>
+                            <td>{{ bus.get('source', 'N/A') }} → {{ bus.get('destination', 'N/A') }}</td>
+                            <td>{{ bus.get('available_seats', 0) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel-card">
+            <h2>Recent bookings</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Route</th>
+                            <th>Seat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.get('name', 'Guest') }}</td>
+                            <td>{{ booking.get('source', 'N/A') }} → {{ booking.get('destination', 'N/A') }}</td>
+                            <td>{{ booking.get('seat_number', 'N/A') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

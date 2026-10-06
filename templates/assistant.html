@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Travel Assistant | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">AI assistant</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/buses">Routes</a>
+            <a href="/status">Status</a>
+            <a href="/notifications">Alerts</a>
+            <a href="/complaints">Support</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell">
+    <div class="page-hero">
+        <div>
+            <p class="eyebrow">Travel intelligence</p>
+            <h1>AI Travel Assistant</h1>
+        </div>
+        <span class="status-pill">Assistant online</span>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span>Route fit</span>
+            <strong>96%</strong>
+        </div>
+        <div class="metric-card">
+            <span>Trip time</span>
+            <strong>4h 10m</strong>
+        </div>
+        <div class="metric-card">
+            <span>Traffic score</span>
+            <strong>Low</strong>
+        </div>
+        <div class="metric-card">
+            <span>Weather</span>
+            <strong>Clear</strong>
+        </div>
+    </div>
+
+    <div class="two-column">
+        <div class="panel-card">
+            <h2>Smart recommendations</h2>
+            <div class="stack-list">
+                {% for suggestion in suggestions %}
+                <div class="smart-item">
+                    <span class="chip">AI</span>
+                    <div>
+                        <strong>{{ suggestion.title }}</strong>
+                        <p>{{ suggestion.text }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="panel-card">
+            <h2>Live trip guidance</h2>
+            <div class="route-card">
+                <div class="route-header">
+                    <span>Next departure</span>
+                    <strong>08:00 AM</strong>
+                </div>
+                <p>Mumbai → Pune</p>
+                <ul class="mini-list">
+                    <li>Arrival estimate: 12:00 PM</li>
+                    <li>Best seat: Window side, row 3</li>
+                    <li>Suggested arrival at station: 07:35 AM</li>
+                </ul>
+            </div>
+            <div class="action-row">
+                <a href="/buses" class="primary-btn">Search routes</a>
+                <a href="/notifications" class="secondary-btn">View alerts</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

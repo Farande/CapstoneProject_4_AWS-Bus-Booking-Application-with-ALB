@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">lost & found</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/buses">Routes</a>
+            <a href="/status">Status</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell">
+    <div class="page-hero">
+        <div>
+            <p class="eyebrow">Passenger support</p>
+            <h1>Lost & Found Desk</h1>
+        </div>
+        <span class="status-pill">Claims tracking</span>
+    </div>
+
+    <div class="two-column">
+        <div class="form-card compact-form">
+            <h2>Report an item</h2>
+            <form method="post" action="{{ url_for('lost_found.lost_found') }}">
+                <div class="form-group">
+                    <label for="item">Item</label>
+                    <input id="item" name="item" type="text" placeholder="Example: blue laptop bag" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input id="location" name="location" type="text" placeholder="Terminal or bus stop" required>
+                </div>
+                <button type="submit" class="submit-btn">Submit report</button>
+            </form>
+        </div>
+
+        <div class="panel-card">
+            <h2>Item tracker</h2>
+            <div class="stack-list">
+                {% for item in items %}
+                <div class="smart-item">
+                    <div class="complaint-meta">
+                        <span class="chip">{{ item.status }}</span>
+                        <span class="status-badge pending">{{ item.owner }}</span>
+                    </div>
+                    <strong>{{ item.item }}</strong>
+                    <p>{{ item.location }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

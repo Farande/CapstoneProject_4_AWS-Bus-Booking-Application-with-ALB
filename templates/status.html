@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Delay Status | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">live status</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/buses">Routes</a>
+            <a href="/assistant">AI</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell">
+    <div class="page-hero">
+        <div>
+            <p class="eyebrow">Network operations</p>
+            <h1>Bus Delay & Status</h1>
+        </div>
+        <span class="status-pill">Live tracking</span>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span>On time</span>
+            <strong>92%</strong>
+        </div>
+        <div class="metric-card">
+            <span>Delayed trips</span>
+            <strong>03</strong>
+        </div>
+        <div class="metric-card">
+            <span>Average lag</span>
+            <strong>12 min</strong>
+        </div>
+        <div class="metric-card">
+            <span>Passengers alerted</span>
+            <strong>1.2K</strong>
+        </div>
+    </div>
+
+    <div class="panel-card">
+        <h2>Operational status</h2>
+        <div class="stack-list">
+            {% for delay in delays %}
+            <div class="smart-item status-row">
+                <div>
+                    <strong>{{ delay.route }}</strong>
+                    <p>{{ delay.bus }}</p>
+                </div>
+                <div class="status-meta">
+                    <span class="status-badge {{ 'pending' if delay.status == 'Delayed' else 'confirmed' }}">{{ delay.status }}</span>
+                    <small>{{ delay.minutes }} min</small>
+                </div>
+                <p>{{ delay.reason }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

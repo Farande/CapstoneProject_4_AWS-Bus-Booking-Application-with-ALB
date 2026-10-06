@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics & Reports | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">analytics</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/buses">Routes</a>
+            <a href="/admin">Admin</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell">
+    <div class="page-hero">
+        <div>
+            <p class="eyebrow">Business intelligence</p>
+            <h1>Analytics & Reports</h1>
+        </div>
+        <span class="status-pill">Updated today</span>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span>Revenue</span>
+            <strong>{{ analytics.revenue }}</strong>
+        </div>
+        <div class="metric-card">
+            <span>Occupancy</span>
+            <strong>{{ analytics.occupancy }}</strong>
+        </div>
+        <div class="metric-card">
+            <span>Bookings</span>
+            <strong>{{ analytics.bookings }}</strong>
+        </div>
+        <div class="metric-card">
+            <span>Rating</span>
+            <strong>{{ analytics.rating }}</strong>
+        </div>
+    </div>
+
+    <div class="two-column">
+        <div class="panel-card">
+            <h2>Service performance</h2>
+            <div class="chart-stack">
+                <div class="chart-row">
+                    <span>On-time arrivals</span>
+                    <div class="chart-bar"><span style="width: 92%"></span></div>
+                    <strong>92%</strong>
+                </div>
+                <div class="chart-row">
+                    <span>Seat occupancy</span>
+                    <div class="chart-bar"><span style="width: 84%"></span></div>
+                    <strong>84%</strong>
+                </div>
+                <div class="chart-row">
+                    <span>Customer satisfaction</span>
+                    <div class="chart-bar"><span style="width: 96%"></span></div>
+                    <strong>96%</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-card">
+            <h2>Operational insight</h2>
+            <div class="stack-list">
+                <div class="smart-item">
+                    <strong>Complaints resolved</strong>
+                    <p>{{ analytics.complaints }} open or escalated items require dispatch follow-up.</p>
+                </div>
+                <div class="smart-item">
+                    <strong>Peak time demand</strong>
+                    <p>High demand in the 7:30 AM to 9:30 AM corridor. Consider adding extra capacity.</p>
+                </div>
+                <div class="smart-item">
+                    <strong>AI recommendation</strong>
+                    <p>Increase service coverage for the Mumbai → Pune route during evening rush hours.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

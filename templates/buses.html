@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Routes | TransitFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <div class="brand-wrap">
+            <div class="brand"><span class="brand-mark">T</span>TransitFlow</div>
+            <small class="brand-subtitle">AI mobility</small>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/history">My Trips</a>
+            <a href="/assistant">AI Assistant</a>
+            <a href="/status">Status</a>
+            <a href="/complaints">Support</a>
+            <a href="/logout" class="highlight">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<section class="page-shell">
+    <div class="page-hero">
+        <div>
+            <p class="eyebrow">Live route network</p>
+            <h1>Available Buses</h1>
+        </div>
+        <a href="{{ url_for('history.history') }}" class="ghost-btn">My Booking History</a>
+    </div>
+
+    <div class="network-panel" style="margin-bottom: 24px;">
+        <div class="network-head">
+            <strong>Smart route search</strong>
+            <span class="status-pill">Updated now</span>
+        </div>
+        <form class="search-form" action="{{ url_for('buses.buses') }}" method="get">
+            <div class="search-grid">
+                <div class="field">
+                    <label for="source">From</label>
+                    <input id="source" name="source" type="text" placeholder="Departure city">
+                </div>
+                <div class="field">
+                    <label for="destination">To</label>
+                    <input id="destination" name="destination" type="text" placeholder="Destination city">
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">Find Available Buses</button>
+        </form>
+    </div>
+
+    {% if buses %}
+    <div class="bus-grid">
+        {% for bus in buses %}
+        <article class="travel-card">
+            <div class="route-top">
+                <span class="route-badge">{{ bus.get('bus_number', 'Bus') }}</span>
+                <span class="route-tag">{{ bus.get('source', 'Mumbai') }} → {{ bus.get('destination', 'Pune') }}</span>
+            </div>
+
+            <h2>{{ bus.get('bus_name', 'Express Travels') }}</h2>
+
+            <div class="route-meta">
+                <span>Departure: {{ bus.get('departure_time', '08:00 AM') }}</span>
+                <span>Arrival: {{ bus.get('arrival_time', '12:00 PM') }}</span>
+                <span>Seat status: {{ bus.get('available_seats', 0) }} available</span>
+            </div>
+
+            <div class="bus-footer">
+                <div>
+                    <p class="fare">₹{{ bus.get('fare', 500) }}</p>
+                    <small>AI-optimized fare</small>
+                </div>
+                <a href="{{ url_for('booking.book', bus_id=bus['bus_id']) }}" class="primary-btn">Book Now</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">No buses match your current search. Try another route or check back soon.</div>
+    {% endif %}
+</section>
+
+</body>
+</html>
