@@ -210,7 +210,7 @@ pip install -r requirements.txt
 **4. Configure the database connection**
 
 ```python
-DB_HOST = "YOUR-RDS-ENDPOINT.region.rds.amazonaws.com"
+DB_HOST = "foodorderdb.c9c6mkwkmeli.ap-south-1.rds.amazonaws.com"
 DB_USER = "admin"
 DB_PASSWORD = "YOUR-PASSWORD"
 DB_NAME = "BusBookingDB"
